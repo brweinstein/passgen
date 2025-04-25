@@ -9,7 +9,7 @@ struct Cli {
     alpha: bool,
 }
 
-fn parse() -> Cli {
+fn get_cli() -> Cli {
     let mut args = env::args().skip(1);
 
     let mut length = 16; //default value
@@ -42,7 +42,12 @@ fn parse() -> Cli {
         }
     }
 
-    Cli{length, symbols, numeric, alpha}
+    Cli {
+        length,
+        symbols,
+        numeric,
+        alpha,
+    }
 }
 
 fn get_chars(cli: Cli) -> Vec<char> {
@@ -93,7 +98,7 @@ fn random_idx(max: usize) -> usize {
 }
 
 fn main() {
-    let cli = parse();
+    let cli = get_cli();
     let charset: Vec<char> = get_chars(cli.clone());
     let pwd = create_password(cli.length, charset.clone());
 
