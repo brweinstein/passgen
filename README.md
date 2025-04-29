@@ -9,4 +9,4 @@ A simple password generator written in rust
 - -n or --numeric: Numeric
 - If no flag is specified --> alphanumeric characters and symbols
 
-![example_usage.png]
+![Image](example_usage.png)
