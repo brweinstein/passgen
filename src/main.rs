@@ -9,7 +9,7 @@ struct Cli {
     alpha: bool,
 }
 
-fn get_cli() -> Cli {
+fn get_cli() -> Cli { 
     let mut args = env::args().skip(1);
 
     let mut length = 16; //default value
