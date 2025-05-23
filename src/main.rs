@@ -16,7 +16,8 @@ fn get_cli() -> Cli {
     let mut symbols: bool = true;
     let mut numeric: bool = true;
     let mut alpha: bool = true;
-
+    
+    //Parse arguments for valid flags
     while let Some(arg) = args.next() {
         match arg.as_str() {
             "-l" | "--length" => {
@@ -35,13 +36,14 @@ fn get_cli() -> Cli {
                 alpha = false;
                 symbols = false;
             }
+            //Invalid flag
             _ => {
                 eprintln!("{}: Invalid flag", arg.as_str());
                 std::process::exit(1);
             }
         }
     }
-
+    //Return an instance of Cli Struct
     Cli {
         length,
         symbols,
@@ -50,6 +52,7 @@ fn get_cli() -> Cli {
     }
 }
 
+//Put the character set based on booleans in Cli
 fn get_chars(cli: Cli) -> Vec<char> {
     let mut charset = String::new();
 
@@ -69,17 +72,19 @@ fn get_chars(cli: Cli) -> Vec<char> {
         eprintln!("Error: No characters provided");
         std::process::exit(1);
     }
-
+    //Return charset as Vec<char>
     charset.chars().collect()
 }
 
+//Create the password through random index
 fn create_password(length: usize, charset: Vec<char>) -> String {
+    //Use 'a' as a placeholder character
     let mut arr: Vec<char> = vec!['a'; length];
     for i in 0..length {
         let random_char = charset[random_idx(charset.len())];
         arr[i] = random_char;
     }
-
+    // Return String
     arr.iter().collect()
 }
 
@@ -91,6 +96,7 @@ fn lcg(seed: u64, max: u64) -> u64 {
     (MULTIPLIER.wrapping_mul(seed).wrapping_add(INCREMENT)) % max
 }
 
+//Use random index based on lcg and time since UNIX Epoch
 fn random_idx(max: usize) -> usize {
     let duration = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
     let seed = duration.as_nanos() as u64;
@@ -100,7 +106,8 @@ fn random_idx(max: usize) -> usize {
 fn main() {
     let cli = get_cli();
     let charset: Vec<char> = get_chars(cli.clone());
-    let pwd = create_password(cli.length, charset.clone());
-
+    let pwd = create_password(cli.length, charset);
+    
+    //Print the password to stdout
     println!("Password: {}", pwd)
 }
