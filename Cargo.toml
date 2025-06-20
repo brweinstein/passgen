@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 copypasta = "0.10.1"
+libc = "0.2.174"
