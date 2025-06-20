@@ -83,7 +83,7 @@ Entropy is calculated as length * log2(charset_size) and displayed if requested.
 
 ## Example Output
 
-![](example_usage.png)
+![](usage.png)
 
 License
 

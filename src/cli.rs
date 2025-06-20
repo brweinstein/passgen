@@ -1,4 +1,5 @@
 use std::env;
+use std::process;
 
 #[derive(Clone)]
 pub struct Cli {
@@ -53,9 +54,18 @@ pub fn get_cli() -> Cli {
    while let Some(arg) = args.next() {
       match arg.as_str() {
          "-l" | "--length" => {
-               if let Some(val) = args.next() {
-                  length = val.parse().unwrap_or(16);
-               }
+            if let Some(val) = args.next() {
+                  match val.parse::<usize>() {
+                     Ok(parsed) => length = parsed,
+                     Err(_) => {
+                        eprintln!("Error: Invalid value for length: '{}'", val);
+                        process::exit(1);
+                     }
+                  }
+            } else {
+                  eprintln!("Error: Missing value after '{}'", arg);
+                  process::exit(1);
+            }
          }
          "-an" | "--alphanumeric" => {
                symbols = false;
